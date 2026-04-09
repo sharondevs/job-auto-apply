@@ -1,0 +1,26 @@
+# Hanzi - browser automation for AI agents
+# Allow all AI and search bots to crawl and cite our content
+
+User-agent: *
+Allow: /
+
+# AI bots (explicitly allowed)
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://browse.hanzilla.co/sitemap.xml

@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hanzi - Give your AI agent a real browser</title>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-C8MZTXW947"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-C8MZTXW947');</script>
+    <meta name="description" content="Hanzi gives your AI agent (Claude Code, Cursor, Codex) a real signed-in browser. Automate browser tasks, test apps, prospect on LinkedIn. Free to start.">
+    <link rel="canonical" href="https://browse.hanzilla.co/">
+
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <meta property="og:title" content="Hanzi - Give your AI agent a real browser">
+    <meta property="og:description" content="Give your AI agent a real browser. Test apps, post to social platforms, prospect on LinkedIn, and automate browser tasks — works with any AI agent.">
+    <meta property="og:image" content="https://browse.hanzilla.co/og.png">
+    <meta property="og:url" content="https://browse.hanzilla.co">
+    <meta property="og:type" content="website">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Hanzi - Give your AI agent a real browser">
+    <meta name="twitter:description" content="Give your AI agent a real browser. Test apps, post to social platforms, prospect on LinkedIn, and automate browser tasks — works with any AI agent.">
+    <meta name="twitter:image" content="https://browse.hanzilla.co/og.png">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Hanzi",
+      "description": "Browser automation tool that gives AI coding agents like Claude Code, Cursor, and Windsurf access to a real Chrome browser. One setup command, entire browser task delegated.",
+      "url": "https://browse.hanzilla.co",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Chrome, Edge, Brave, Arc",
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": "BYOM (Bring Your Own Model)",
+          "price": "0",
+          "priceCurrency": "USD",
+          "description": "Free forever. Use your own Claude, GPT, or Gemini API key."
+        },
+        {
+          "@type": "Offer",
+          "name": "Managed",
+          "price": "0.05",
+          "priceCurrency": "USD",
+          "description": "Per completed task. 20 free tasks per month included. Errors and timeouts are free."
+        }
+      ],
+      "author": {
+        "@type": "Organization",
+        "name": "Hanzi",
+        "url": "https://browse.hanzilla.co"
+      }
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg: #f7f3ea;
+            --surface: #fffdf8;
+            --surface-2: #f3ede2;
+            --ink: #1f1711;
+            --muted: #6d6256;
+            --line: #e5ddd0;
+            --accent: #ad5a34;
+            --accent-dark: #8d4524;
+            --green: #2f4a3d;
+            --purple: #4a3d6b;
+            --shadow: 0 16px 40px rgba(54, 38, 23, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at top left, rgba(233, 199, 146, 0.22), transparent 28%),
+                radial-gradient(circle at top right, rgba(154, 191, 170, 0.18), transparent 26%),
+                var(--bg);
+            color: var(--ink);
+            font-family: "Avenir Next", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .page {
+            width: min(1120px, calc(100% - 40px));
+            margin: 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            padding: 28px 0 18px;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+        }
+
+        .brand-mark {
+            width: 26px;
+            height: 26px;
+            flex-shrink: 0;
+        }
+
+        .header-links {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn,
+        .link-pill {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 44px;
+            padding: 0 18px;
+            border-radius: 999px;
+            border: 1px solid var(--line);
+            background: var(--surface);
+            font-size: 14px;
+            font-weight: 700;
+            transition: transform 140ms ease, background 140ms ease, border-color 140ms ease;
+        }
+
+        .btn:hover,
+        .link-pill:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn-primary {
+            color: #fff;
+            border-color: transparent;
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+        }
+
+        .btn-green {
+            color: #fff;
+            border-color: transparent;
+            background: linear-gradient(135deg, var(--green), #1f3a2d);
+        }
+
+        .btn-nav-signin {
+            min-height: 36px;
+            padding: 0 16px;
+            font-size: 13px;
+        }
+
+        .btn-signin-hero {
+            border: none;
+            background: none;
+            color: var(--ink);
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            padding: 0 8px;
+        }
+        .btn-signin-hero:hover {
+            color: var(--accent);
+        }
+
+        .btn-purple {
+            color: #fff;
+            border-color: transparent;
+            background: linear-gradient(135deg, var(--purple), #362b52);
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+            gap: 42px;
+            align-items: center;
+            padding: 34px 0 44px;
+        }
+
+        h1,
+        h2 {
+            font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+            letter-spacing: -0.05em;
+        }
+
+        h1 {
+            max-width: 10ch;
+            margin-top: 20px;
+            font-size: clamp(3rem, 7vw, 5.2rem);
+            line-height: 1.0;
+        }
+
+        .hero-copy p {
+            max-width: 560px;
+            margin-top: 20px;
+            font-size: 18px;
+            line-height: 1.65;
+            color: var(--muted);
+        }
+
+        .hero-copy strong {
+            color: var(--ink);
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 28px;
+        }
+
+        .signal-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 14px;
+        }
+
+        .signal-chip {
+            padding: 12px 16px;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            background: rgba(255, 253, 248, 0.7);
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.4;
+            min-height: 44px;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .demo-panel {
+            border: 1px solid var(--line);
+            border-radius: 24px;
+            background: var(--surface);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .section {
+            padding: 56px 0;
+            border-top: 1px solid var(--line);
+        }
+
+        .section-head {
+            display: grid;
+            grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+            gap: 30px;
+            align-items: end;
+            margin-bottom: 28px;
+        }
+
+        .section-kicker {
+            color: var(--accent-dark);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .section-kicker.green { color: var(--green); }
+        .section-kicker.purple { color: var(--purple); }
+
+        h2 {
+            margin-top: 10px;
+            font-size: clamp(2.1rem, 4vw, 3.3rem);
+            line-height: 0.96;
+        }
+
+        .section-head p {
+            max-width: 560px;
+            color: var(--muted);
+            font-size: 17px;
+            line-height: 1.65;
+        }
+
+        .stack-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .stack-card,
+        .diff-card,
+        .prompt-card,
+        .cta-band,
+        .path-card {
+            border: 1px solid var(--line);
+            border-radius: 22px;
+            background: var(--surface);
+        }
+
+        .stack-card {
+            padding: 22px;
+        }
+
+        .stack-card span {
+            display: inline-block;
+            margin-bottom: 12px;
+            color: var(--accent-dark);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .stack-card h3,
+        .diff-card h3 {
+            font-size: 20px;
+            line-height: 1.2;
+            margin-bottom: 10px;
+        }
+
+        .stack-card p,
+        .diff-card p {
+            color: var(--muted);
+            font-size: 15px;
+            line-height: 1.65;
+        }
+
+        .diff-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .diff-card {
+            padding: 22px;
+        }
+
+        /* Two-path cards */
+        .path-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .path-card {
+            padding: 28px 24px;
+        }
+
+        .path-card h3 {
+            font-size: 22px;
+            line-height: 1.15;
+            margin-bottom: 10px;
+        }
+
+        .path-card p {
+            color: var(--muted);
+            font-size: 15px;
+            line-height: 1.65;
+            margin-bottom: 16px;
+        }
+
+        .path-steps {
+            display: grid;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .path-step {
+            display: flex;
+            gap: 12px;
+            align-items: baseline;
+            padding: 12px 14px;
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.5);
+            font-size: 14px;
+            line-height: 1.5;
+            color: var(--ink);
+        }
+
+        .path-step .step-num {
+            flex-shrink: 0;
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .step-num-green { background: #e8f0ec; color: var(--green); }
+        .step-num-purple { background: #e8e4f0; color: var(--purple); }
+
+        .path-step code {
+            font-family: "SFMono-Regular", Menlo, Consolas, monospace;
+            font-size: 13px;
+            padding: 2px 6px;
+            border-radius: 6px;
+            background: #f1eadf;
+        }
+
+        /* Mode pills */
+        .mode-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .mode-pill {
+            padding: 14px;
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .mode-pill strong {
+            display: block;
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        .mode-pill span {
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        /* Prompt cards (skills/emergent) */
+        .prompt-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .prompt-card {
+            padding: 22px 20px;
+            background: linear-gradient(180deg, #fffdf8 0%, #f7f1e6 100%);
+        }
+
+        .prompt-card span {
+            display: inline-block;
+            margin-bottom: 12px;
+            color: var(--green);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .prompt-card h3 {
+            margin-bottom: 10px;
+            font-size: 22px;
+            line-height: 1.15;
+        }
+
+        .prompt-card p {
+            margin-bottom: 16px;
+            color: var(--muted);
+            font-size: 15px;
+            line-height: 1.65;
+        }
+
+        .prompt-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .prompt-item {
+            padding: 14px 14px 16px;
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.58);
+        }
+
+        a.prompt-item {
+            display: block;
+            transition: transform 140ms ease, border-color 140ms ease, background 140ms ease;
+        }
+
+        a.prompt-item:hover {
+            transform: translateY(-1px);
+            border-color: #d9cbb8;
+            background: rgba(255, 255, 255, 0.78);
+        }
+
+        .prompt-item strong {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--green);
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .prompt-card code {
+            font-family: "SFMono-Regular", Menlo, Consolas, monospace;
+            font-size: 14px;
+            line-height: 1.65;
+            color: var(--ink);
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .install-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+
+        .install-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--muted);
+        }
+
+        .install-tabs {
+            display: flex;
+            gap: 0;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .install-tab {
+            padding: 6px 14px;
+            font-size: 12px;
+            font-weight: 600;
+            font-family: inherit;
+            border: none;
+            background: transparent;
+            color: var(--muted);
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .install-tab.active {
+            background: var(--ink);
+            color: #fff;
+        }
+
+        .setup-copy {
+            position: relative;
+            margin-top: 14px;
+            padding: 16px 16px 18px;
+            border-radius: 16px;
+            background: #241c17;
+        }
+
+        .setup-copy pre {
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-word;
+            color: #f4e8d8;
+            font-family: "SFMono-Regular", Menlo, Consolas, monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            padding-right: 60px;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 8px 10px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.08);
+            color: #f4e8d8;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .cta-band {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 20px;
+            align-items: center;
+            padding: 28px;
+            background: linear-gradient(135deg, #fffdf8 0%, #f2eadf 100%);
+        }
+
+        .cta-band p {
+            margin-top: 10px;
+            color: var(--muted);
+            font-size: 16px;
+            line-height: 1.65;
+        }
+
+        footer {
+            display: flex;
+            justify-content: space-between;
+            gap: 18px;
+            flex-wrap: wrap;
+            padding: 30px 0 40px;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 16px;
+            padding: 8px 16px;
+            background: var(--ink);
+            color: var(--surface);
+            border-radius: 0 0 8px 8px;
+            font-size: 14px;
+            font-weight: 600;
+            z-index: 100;
+            transition: top 0.2s;
+        }
+        .skip-link:focus {
+            top: 0;
+        }
+
+        :focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        a:focus-visible,
+        .btn:focus-visible,
+        .link-pill:focus-visible,
+        .copy-btn:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        .video-facade:hover svg circle {
+            fill: rgba(0,0,0,0.75);
+            transition: fill 0.2s;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            html {
+                scroll-behavior: auto;
+            }
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #1a1714;
+                --surface: #242018;
+                --surface-2: #2e2820;
+                --ink: #e8e0d4;
+                --muted: #9a9088;
+                --line: #3a342a;
+                --accent: #d4845f;
+                --accent-dark: #c07050;
+                --green: #6aaa8a;
+                --purple: #9a8ac0;
+                --shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+            }
+
+            .setup-copy {
+                background: #141210;
+            }
+
+            .path-step {
+                background: rgba(30, 26, 20, 0.5);
+            }
+
+            .mode-pill {
+                background: rgba(30, 26, 20, 0.5);
+            }
+
+            .prompt-card {
+                background: linear-gradient(180deg, #242018 0%, #1e1a14 100%);
+            }
+
+            .prompt-item {
+                background: rgba(30, 26, 20, 0.58);
+            }
+
+            a.prompt-item:hover {
+                background: rgba(40, 34, 26, 0.78);
+                border-color: #4a4036;
+            }
+
+            .path-step code {
+                background: #2e2820;
+            }
+
+            .cta-band {
+                background: linear-gradient(135deg, #242018 0%, #1e1a14 100%);
+            }
+
+            .stack-card[style*="border-color: var(--accent)"] {
+                border-color: var(--accent);
+            }
+
+            .brand-mark rect {
+                fill: var(--ink);
+            }
+            .brand-mark path {
+                stroke: var(--surface);
+            }
+
+            body {
+                background:
+                    radial-gradient(circle at top left, rgba(100, 80, 50, 0.12), transparent 28%),
+                    radial-gradient(circle at top right, rgba(60, 90, 70, 0.10), transparent 26%),
+                    var(--bg);
+            }
+
+            .stack-card span[style*="background: #fceee4"] {
+                background: rgba(212, 132, 95, 0.2) !important;
+            }
+            .stack-card span[style*="background: #e8f0ec"] {
+                background: rgba(106, 170, 138, 0.2) !important;
+            }
+
+            .step-num-green {
+                background: rgba(106, 170, 138, 0.15);
+            }
+            .step-num-purple {
+                background: rgba(154, 138, 192, 0.15);
+            }
+        }
+
+        @media (max-width: 980px) {
+            .hero,
+            .section-head,
+            .cta-band,
+            .stack-grid,
+            .diff-grid,
+            .path-grid,
+            .prompt-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 720px) {
+            .page {
+                width: min(100% - 24px, 1120px);
+            }
+
+            header {
+                padding-top: 20px;
+            }
+
+            .header-links,
+            .hero-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .btn,
+            .link-pill {
+                width: 100%;
+            }
+
+            h1 {
+                max-width: none;
+                font-size: clamp(2.8rem, 18vw, 4.2rem);
+            }
+
+            .hero-copy p,
+            .section-head p {
+                font-size: 16px;
+            }
+
+            .section {
+                padding: 44px 0;
+            }
+
+            .mode-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <a class="skip-link" href="#main-content">Skip to content</a>
+        <header>
+            <a class="brand" href="index.html">
+                <svg class="brand-mark" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="24" height="24" rx="6" fill="#1f1711"/>
+                    <path d="M7 7v10M17 7v10M7 12h10" stroke="#fffdf8" stroke-width="2.5" stroke-linecap="round"/>
+                </svg>
+                Hanzi
+            </a>
+            <nav class="header-links" aria-label="Main navigation">
+                <a class="link-pill" href="docs.html">Docs</a>
+                <a class="link-pill" href="#pricing">Pricing</a>
+                <a class="link-pill" href="https://discord.gg/hahgu5hcA5" target="_blank" rel="noreferrer" aria-label="Discord (opens in new tab)">Discord</a>
+                <a class="link-pill" href="https://github.com/hanzili/hanzi-browse" target="_blank" rel="noreferrer" aria-label="GitHub (opens in new tab)">GitHub</a>
+                <button class="btn btn-green btn-nav-signin" onclick="hanziSignIn()" aria-label="Sign in to dashboard">Sign in</button>
+            </nav>
+        </header>
+
+        <main id="main-content">
+            <!-- Hero -->
+            <section class="hero">
+                <div class="hero-copy">
+                    <h1>Give your AI agent a real browser.</h1>
+                    <p>Your agent stops when it needs a browser. <strong>Hanzi lets it keep going</strong> — using your real signed-in Chrome session.</p>
+                    <div class="hero-actions">
+                        <a class="btn btn-green" href="#use-hanzi">Use Hanzi</a>
+                        <a class="btn btn-purple" href="#build-with-hanzi">Build with Hanzi</a>
+                        <button class="btn btn-signin-hero" onclick="hanziSignIn()">Sign in &rarr;</button>
+                    </div>
+                </div>
+
+                <div class="demo-panel">
+                    <div class="video-facade" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 24px; cursor: pointer;" onclick="loadVideo(this)" role="button" tabindex="0" aria-label="Play demo video" onkeydown="if(event.key==='Enter')loadVideo(this)">
+                        <img src="https://img.youtube.com/vi/3tHzg2ps-9w/maxresdefault.jpg" alt="Hanzi demo video thumbnail" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;" loading="lazy">
+                        <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.15);">
+                            <svg width="68" height="68" viewBox="0 0 68 68" fill="none"><circle cx="34" cy="34" r="34" fill="rgba(0,0,0,0.6)"/><polygon points="28,22 28,46 48,34" fill="white"/></svg>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div style="display: flex; align-items: center; justify-content: center; gap: 22px; padding: 16px 0 10px; flex-wrap: wrap;">
+                <span style="font-size: 14px; color: var(--muted); font-style: italic;">Works with</span>
+                <img src="logos/cursor-logo-5jxhjn17.png" width="28" height="28" alt="Cursor" title="Cursor" style="opacity: 0.7;">
+                <img src="logos/claude-logo-0p9b6824.png" width="28" height="28" alt="Claude Code" title="Claude Code" style="opacity: 0.7;">
+                <img src="logos/gemini-logo-1f6kvbwc.png" width="24" height="24" alt="Gemini CLI" title="Gemini CLI" style="opacity: 0.7;">
+                <img src="logos/openai-logo-6323x4zd.png" width="24" height="24" alt="Codex CLI" title="Codex CLI" style="opacity: 0.7;">
+                <img src="logos/github-logo-tr9d8349.png" width="24" height="24" alt="VS Code Copilot" title="VS Code Copilot" style="opacity: 0.7;">
+                <img src="logos/antigravity-logo-szj1gjgv.png" width="24" height="24" alt="Antigravity" title="Antigravity" style="opacity: 0.7;">
+                <img src="logos/kiro-logo-wk3s9bcy.png" width="24" height="24" alt="Kiro" title="Kiro" style="opacity: 0.7;">
+                <img src="logos/opencode-logo-svpy0wcb.png" width="24" height="24" alt="OpenCode" title="OpenCode" style="opacity: 0.7;">
+                <img src="logos/pi-logo-g08abpj5.svg" width="24" height="24" alt="Pi" title="Pi" style="opacity: 0.7; background: #1a1a1a; border-radius: 50%; padding: 3px;">
+            </div>
+
+            <!-- Use Hanzi -->
+            <section class="section" id="use-hanzi">
+                <div class="section-head">
+                    <div>
+                        <div class="section-kicker green">Use Hanzi</div>
+                        <h2>Your AI agent gets a real&nbsp;browser.</h2>
+                    </div>
+                    <p>One setup command. Works with Claude Code, Cursor, Codex, and Windsurf. Free to start.</p>
+                </div>
+
+                <div class="path-grid">
+                    <div class="path-card">
+                        <div class="install-header">
+                            <span class="install-label">INSTALL HANZI</span>
+                            <div class="install-tabs">
+                                <button class="install-tab active" onclick="switchInstallTab('terminal', this)">Terminal</button>
+                                <button class="install-tab" onclick="switchInstallTab('agent', this)">AI Agent</button>
+                            </div>
+                        </div>
+
+                        <div id="install-terminal" class="install-panel">
+                            <div class="setup-copy" style="margin-top: 0;">
+                                <pre>npx hanzi-browse setup</pre>
+                                <button class="copy-btn" data-copy="npx hanzi-browse setup" onclick="copyData(this)">Copy</button>
+                            </div>
+                        </div>
+
+                        <div id="install-agent" class="install-panel" style="display: none;">
+                            <div class="setup-copy" style="margin-top: 0;">
+                                <pre style="font-size: 12px; line-height: 1.5;">Install Hanzi Browse. Run `npx hanzi-browse setup` and follow the prompts. This will install the Chrome extension, configure the MCP server, and install browser skills for every agent on this machine.</pre>
+                                <button class="copy-btn" data-copy="Install Hanzi Browse. Run `npx hanzi-browse setup` and follow the prompts. This will install the Chrome extension, configure the MCP server, and install browser skills for every agent on this machine." onclick="copyData(this)">Copy</button>
+                            </div>
+                            <p style="font-size: 12px; color: var(--muted); margin-top: 10px;">Paste this into Claude Code, Cursor, Codex, or any AI coding agent.</p>
+                        </div>
+
+                        <div class="path-steps" style="margin-top: 16px;">
+                            <div class="path-step">
+                                <span class="step-num step-num-green">1</span>
+                                Installs the Chrome extension
+                            </div>
+                            <div class="path-step">
+                                <span class="step-num step-num-green">2</span>
+                                Configures MCP server + browser skills
+                            </div>
+                            <div class="path-step">
+                                <span class="step-num step-num-green">3</span>
+                                Choose: we handle the AI, or bring your own key
+                            </div>
+                        </div>
+
+                        <div class="mode-row">
+                            <div class="mode-pill">
+                                <strong>Managed</strong>
+                                <span>We handle the AI. 20 free tasks/month, then $0.05/task.</span>
+                            </div>
+                            <div class="mode-pill">
+                                <strong>Bring your own model</strong>
+                                <span>Use your Claude Pro, GPT Plus subscription, or any API key. Free forever, runs locally.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="path-card">
+                        <h3>What you can do with it</h3>
+                        <div class="prompt-list" style="margin-top: 12px;">
+                            <a class="prompt-item" href="linkedin-prospector.html">
+                                <strong>linkedin-prospector</strong>
+                                <code>Find people posting about your topic and send personalized connection requests.</code>
+                            </a>
+                            <a class="prompt-item" href="e2e-tester.html">
+                                <strong>e2e-tester</strong>
+                                <code>Inspect the codebase, then test real UI flows in the browser.</code>
+</a>
+                            <a class="prompt-item" href="social-poster.html">
+                                <strong>social-poster</strong>
+                                <code>Draft posts and publish from your real signed-in accounts.</code>
+                            </a>
+                            <a class="prompt-item" href="a11y-auditor.html">
+                                <strong>a11y-auditor</strong>
+                                <code>Audit web pages for WCAG 2.1 AA accessibility issues in a real browser.</code>
+                            </a>
+                            <a class="prompt-item" href="x-marketer.html">
+                                <strong>x-marketer</strong>
+                                <code>Find conversations on X, craft replies in your voice, and grow your presence.</code>
+                            </a>
+                        </div>
+                        <p style="font-size: 13px; color: var(--muted); margin-top: 14px;">Open source skills — <a href="https://github.com/hanzili/hanzi-browse/tree/main/server/skills" target="_blank" rel="noreferrer" style="color: var(--accent-dark); font-weight: 600;" aria-label="add your own (opens in new tab)">add your own</a>.</p>
+
+                        <h3 style="margin-top: 20px;">Or your agent just uses it.</h3>
+                        <div class="prompt-list" style="margin-top: 12px;">
+                            <div class="prompt-item">
+                                <code>"Fix the login bug" → agent opens the app to verify the fix works.</code>
+                            </div>
+                            <div class="prompt-item">
+                                <code>"Set up the project" → agent checks the docs site for the latest install steps.</code>
+                            </div>
+                            <div class="prompt-item">
+                                <code>"Why is this failing?" → agent opens the dashboard to check error logs.</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Build with Hanzi -->
+            <section class="section" id="build-with-hanzi">
+                <div class="section-head">
+                    <div>
+                        <div class="section-kicker purple">Build with Hanzi</div>
+                        <h2>Add browser automation to your&nbsp;product.</h2>
+                    </div>
+                    <p>REST API and TypeScript SDK. Your users connect their browser, your backend runs tasks. Hanzi is the runtime underneath.</p>
+                </div>
+
+                <div class="path-grid">
+                    <div class="path-card">
+                        <h3>How it works</h3>
+                        <div class="path-steps">
+                            <div class="path-step">
+                                <span class="step-num step-num-purple">1</span>
+                                <button onclick="hanziSignIn()" style="background: none; border: none; color: inherit; font-weight: 600; font-size: inherit; font-family: inherit; cursor: pointer; padding: 0; text-decoration: underline; text-underline-offset: 2px;">Sign in</button> and create an API key
+                            </div>
+                            <div class="path-step">
+                                <span class="step-num step-num-purple">2</span>
+                                Send your user a pairing link &mdash; they click it and connect
+                            </div>
+                            <div class="path-step">
+                                <span class="step-num step-num-purple">3</span>
+                                Run tasks from your backend, show results in your app
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px;">
+                            <a class="btn btn-purple" href="docs.html#build-with-hanzi">Developer guide</a>
+                            <a class="btn" href="https://github.com/hanzili/hanzi-browse/tree/main/examples/partner-quickstart" target="_blank" rel="noreferrer" style="border-color: var(--purple); color: var(--purple);" aria-label="Sample app (opens in new tab)">Sample app</a>
+                        </div>
+                        <p style="font-size: 13px; color: var(--muted); margin-top: 14px;">Need volume pricing? <a href="mailto:hanzili0217@gmail.com?subject=Partner%20pricing" style="color: var(--purple); font-weight: 600;">Talk to us</a>.</p>
+                    </div>
+
+                    <div class="path-card">
+                        <h3>Quick example</h3>
+                        <div class="setup-copy" style="margin-top: 0;">
+                            <pre>import { HanziClient } from '@hanzi/browser-agent';
+
+const client = new HanziClient({
+  apiKey: process.env.HANZI_API_KEY,
+});
+
+// Pair a browser — give the URL to your user
+const { pairingToken } = await client.createPairingToken();
+// User visits: https://api.hanzilla.co/pair/{pairingToken}
+
+// Find their connected session
+const sessions = await client.listSessions();
+const browser = sessions.find(s =&gt; s.status === 'connected');
+
+// Run a task
+const result = await client.runTask({
+  browserSessionId: browser.id,
+  task: 'Read the patient chart on this page',
+});
+
+console.log(result.answer);</pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Pricing -->
+            <section class="section" id="pricing">
+                <div class="section-head">
+                    <div>
+                        <div class="section-kicker">Pricing</div>
+                        <h2>Free to start. Pay per&nbsp;task.</h2>
+                    </div>
+                    <p>Only charged for completed tasks. Errors and timeouts are always free.</p>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; max-width: 700px; margin: 0 auto;">
+                    <div class="stack-card" style="padding: 22px; border-color: var(--accent);">
+                        <span style="display: inline-block; margin-bottom: 10px; padding: 4px 10px; border-radius: 999px; background: #fceee4; color: var(--accent-dark); font-size: 11px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;">Managed</span>
+                        <h3 style="font-size: 28px; font-family: 'Iowan Old Style', Georgia, serif; margin-bottom: 4px;">$0.05 <span style="font-size: 14px; font-weight: 400; color: var(--muted);">/ task</span></h3>
+                        <p style="font-size: 13px; color: var(--muted); margin-bottom: 14px;">20 free tasks/month included</p>
+                        <ul style="list-style: none; font-size: 14px; line-height: 2;">
+                            <li>We handle the AI &mdash; no API key needed</li>
+                            <li>Only charged for completed tasks</li>
+                            <li>Errors and timeouts are free</li>
+                            <li>REST API + MCP + TypeScript SDK</li>
+                        </ul>
+                    </div>
+                    <div class="stack-card" style="padding: 22px;">
+                        <span style="display: inline-block; margin-bottom: 10px; padding: 4px 10px; border-radius: 999px; background: #e8f0ec; color: var(--green); font-size: 11px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;">BYOM</span>
+                        <h3 style="font-size: 28px; font-family: 'Iowan Old Style', Georgia, serif; margin-bottom: 4px;">Free</h3>
+                        <p style="font-size: 13px; color: var(--muted); margin-bottom: 14px;">You provide your own AI model</p>
+                        <ul style="list-style: none; font-size: 14px; line-height: 2;">
+                            <li>Use your Claude, GPT, or Gemini key</li>
+                            <li>Everything runs locally</li>
+                            <li>No data leaves your machine</li>
+                            <li>Unlimited tasks</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Bottom CTA -->
+            <section class="section">
+                <div class="cta-band">
+                    <div>
+                        <div class="section-kicker">Start here</div>
+                        <h2>One command. Real browser.</h2>
+                        <p>Or <a href="docs.html#build-with-hanzi" style="color: var(--purple); font-weight: 700;">read the developer guide</a> to embed Hanzi in your product.</p>
+                    </div>
+                    <div class="setup-copy">
+                        <pre>npx hanzi-browse setup</pre>
+                        <button class="copy-btn" data-copy="npx hanzi-browse setup" onclick="copyData(this)">Copy</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <div>Give your AI agent a real browser.</div>
+            <div class="footer-links">
+                <a href="https://github.com/hanzili/hanzi-browse" target="_blank" rel="noreferrer" aria-label="GitHub (opens in new tab)">GitHub</a>
+                <a href="https://discord.gg/hahgu5hcA5" target="_blank" rel="noreferrer" aria-label="Discord (opens in new tab)">Discord</a>
+                <a href="https://www.npmjs.com/package/hanzi-browse" target="_blank" rel="noreferrer" aria-label="npm (opens in new tab)">npm</a>
+                <a href="https://chromewebstore.google.com/detail/hanzi-browse/iklpkemlmbhemkiojndpbhoakgikpmcd" target="_blank" rel="noreferrer" aria-label="Chrome Web Store (opens in new tab)">Chrome Web Store</a>
+                <a href="https://x.com/hanzi_li" target="_blank" rel="noreferrer" aria-label="Twitter (opens in new tab)">Twitter</a>
+                <a href="https://www.linkedin.com/in/hanzi-li-mcgill/" target="_blank" rel="noreferrer" aria-label="LinkedIn (opens in new tab)">LinkedIn</a>
+                <a href="docs.html">Docs</a>
+                <a href="#pricing">Pricing</a>
+                <a href="mailto:hanzili0217@gmail.com">Contact</a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        function switchInstallTab(tab, btn) {
+            document.getElementById('install-terminal').style.display = tab === 'terminal' ? '' : 'none';
+            document.getElementById('install-agent').style.display = tab === 'agent' ? '' : 'none';
+            btn.parentElement.querySelectorAll('.install-tab').forEach(t => t.classList.remove('active'));
+            btn.classList.add('active');
+        }
+
+        function copyData(button) {
+            navigator.clipboard.writeText(button.dataset.copy || '');
+            const original = button.textContent;
+            button.textContent = 'Copied';
+            setTimeout(() => {
+                button.textContent = original;
+            }, 1500);
+        }
+
+        async function hanziSignIn() {
+            var apiBase = location.hostname === 'localhost' ? '' : 'https://api.hanzilla.co';
+            try {
+                const res = await fetch(apiBase + '/api/auth/sign-in/social', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ provider: 'google', callbackURL: '/dashboard' }),
+                });
+                const data = await res.json().catch(() => null);
+                if (data?.url) { window.location.href = data.url; return; }
+            } catch {}
+            window.location.href = apiBase + '/api/auth/sign-in/social?provider=google&callbackURL=/dashboard';
+        }
+
+        function loadVideo(el) {
+            el.innerHTML = '<iframe src="https://www.youtube.com/embed/3tHzg2ps-9w?autoplay=1" title="Hanzi demo" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+            el.style.cursor = 'default';
+            el.removeAttribute('onclick');
+            el.removeAttribute('onkeydown');
+            el.removeAttribute('role');
+            el.removeAttribute('tabindex');
+        }
+    </script>
+</body>
+</html>

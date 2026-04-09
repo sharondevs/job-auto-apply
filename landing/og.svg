@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <radialGradient id="g1" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(200 100) scale(500)">
+      <stop offset="0" stop-color="#e9c792" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="transparent"/>
+    </radialGradient>
+    <radialGradient id="g2" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(1000 80) scale(400)">
+      <stop offset="0" stop-color="#9abfaa" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="transparent"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background matching landing page -->
+  <rect width="1200" height="630" fill="#f7f3ea"/>
+  <rect width="1200" height="630" fill="url(#g1)"/>
+  <rect width="1200" height="630" fill="url(#g2)"/>
+
+  <!-- Brand -->
+  <text x="600" y="195" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="28" font-weight="700" fill="#1f1711" letter-spacing="-0.5">Hanzi</text>
+
+  <!-- Headline -->
+  <text x="600" y="300" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="60" font-weight="700" fill="#1f1711" letter-spacing="-2">Give your AI agent</text>
+  <text x="600" y="375" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="60" font-weight="700" fill="#1f1711" letter-spacing="-2">a real browser.</text>
+
+  <!-- Subtitle -->
+  <text x="600" y="435" text-anchor="middle" font-family="'Helvetica Neue', Arial, sans-serif" font-size="22" fill="#6d6256">Works with Claude Code, Cursor, Codex, and Windsurf. Free to start.</text>
+
+  <!-- Two pills -->
+  <rect x="380" y="475" width="190" height="44" rx="22" fill="#2f4a3d"/>
+  <text x="475" y="503" text-anchor="middle" font-family="'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="700" fill="white">Use Hanzi</text>
+
+  <rect x="590" y="475" width="230" height="44" rx="22" fill="#4a3d6b"/>
+  <text x="705" y="503" text-anchor="middle" font-family="'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="700" fill="white">Build with Hanzi</text>
+
+  <!-- URL -->
+  <text x="600" y="580" text-anchor="middle" font-family="'Helvetica Neue', Arial, sans-serif" font-size="16" fill="#6d6256">browse.hanzilla.co</text>
+</svg>

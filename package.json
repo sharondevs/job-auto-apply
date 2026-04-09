@@ -1,0 +1,43 @@
+{
+  "name": "hanzi-browse",
+  "version": "1.0.0",
+  "description": "Open-source browser automation powered by any LLM",
+  "license": "PolyForm-Noncommercial-1.0.0",
+  "author": "hanzili",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hanzili/hanzi-browse.git"
+  },
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite build --watch --config vite.config.js",
+    "build": "vite build --config vite.config.js",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix",
+    "format": "prettier --write \"src/**/*.{js,jsx,json,html,css}\",\"*.{json,md}\"",
+    "quality": "npm run lint && npm run complexity && npm run dead-code",
+    "complexity": "eslint src/ --format=json > /dev/null || true && echo 'Complexity check complete'",
+    "dead-code": "knip --exclude exports,types,enumMembers",
+    "deps": "depcheck --ignores='eslint,prettier'",
+    "circular": "madge --circular --extensions js src/",
+    "test:extract": "node extract-logs.js",
+    "test:analyze": "node analyze-behavior.js",
+    "test:auto": "node test-automation.js",
+    "test:compare": "node compare-extensions.js"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.28.6",
+    "@preact/preset-vite": "^2.8.2",
+    "depcheck": "^1.4.7",
+    "eslint": "^8.57.0",
+    "eslint-plugin-sonarjs": "^0.25.1",
+    "knip": "^5.0.0",
+    "madge": "^6.1.0",
+    "prettier": "^3.2.5",
+    "vite": "^5.0.12"
+  },
+  "dependencies": {
+    "preact": "^10.29.0"
+  }
+}

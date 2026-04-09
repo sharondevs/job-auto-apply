@@ -1,0 +1,110 @@
+[
+  {
+    "domain": "mail.google.com",
+    "skill": "Gmail best practices:\n- To open an email, click directly on the email subject/preview text, NOT the checkbox or star\n- Use keyboard shortcuts: 'c' to compose, 'r' to reply, 'a' to reply all, 'f' to forward, 'e' to archive\n- To search, use the search bar at the top with operators like 'from:', 'to:', 'subject:', 'is:unread'\n- Reading pane may be on the right or below depending on user settings - check which layout is active\n- Verification codes are often in emails from 'noreply@' addresses with subjects containing 'verification', 'code', or 'confirm'"
+  },
+  {
+    "domain": "docs.google.com",
+    "skill": "Google Docs best practices:\n- This is a canvas-based application - use screenshots to see content, read_page may not capture all text\n- Use keyboard shortcuts: Cmd/Ctrl+B for bold, Cmd/Ctrl+I for italic, Cmd/Ctrl+K for links\n- To navigate, use Cmd/Ctrl+F to find text, then click on the result\n- For editing, click to place cursor then type - triple-click to select a paragraph\n- Access menus via the menu bar at the top (File, Edit, View, Insert, Format, etc.)"
+  },
+  {
+    "domain": "sheets.google.com",
+    "skill": "Google Sheets best practices:\n- Click on cells to select them, double-click to edit cell content\n- Use Tab to move right, Enter to move down, arrow keys to navigate\n- Formulas start with '=' - e.g., =SUM(A1:A10), =VLOOKUP(), =IF()\n- Use Cmd/Ctrl+C and Cmd/Ctrl+V for copy/paste\n- Select ranges by clicking and dragging, or Shift+click for range selection"
+  },
+  {
+    "domain": "github.com",
+    "skill": "GitHub best practices:\n- Repository navigation: Code tab for files, Issues for bug tracking, Pull requests for code review\n- To view a file, click on the filename in the file tree\n- Use 't' to open file finder, 'l' to jump to a line\n- In PRs: 'Files changed' tab shows diffs, 'Conversation' tab shows comments\n- Use the search bar with qualifiers: 'is:open is:pr', 'is:issue label:bug'"
+  },
+  {
+    "domain": "reddit.com",
+    "antiBot": true,
+    "skill": "Reddit UI patterns:\n- Posts are listed in a feed - click on post title to view full post and comments\n- Comments are nested/threaded - each comment has its own reply button underneath\n- Upvote (up arrow) and downvote (down arrow) buttons are to the left of each post/comment\n- To comment, scroll to comment box at top of comments section, or click reply under a specific comment\n- Use the search bar at top to find subreddits or posts\n- r/subredditname format for community names"
+  },
+  {
+    "domain": "linkedin.com",
+    "antiBot": true,
+    "skill": "LinkedIn Job Application — verified patterns\n\n## Easy Apply Flow\n- Click 'Easy Apply' button on the job listing to open the modal\n- The modal is a multi-step form — each step has a 'Next' or 'Review' button at the bottom\n- Contact Info page is pre-filled from LinkedIn profile — do NOT modify, just click Next\n- Modal forms may need scrolling to see all content and buttons — scroll inside the modal\n- Use screenshots over read_page for modals — accessibility tree often misses modal content\n- After the final step, there is a 'Submit application' button — this is the only place to pause\n- Some steps ask additional questions (years of experience, work authorization, etc.)\n- For dropdowns in the modal, ALWAYS use form_input — custom React dropdowns break with clicks\n- Resume upload: if prompted, use file_upload tool — never click the upload button directly\n\n## External Apply\n- 'Apply' (without 'Easy') redirects to the company's ATS (Workday, Greenhouse, Lever, etc.)\n- A new tab may open — use tabs_context to find it, then continue in that tab\n\n## Navigation\n- Main tabs: Home (feed), My Network, Jobs, Messaging, Notifications\n- Job search: Jobs tab, then filter by location, experience level, date posted\n- 'Easy Apply' = apply within LinkedIn modal; 'Apply' = external site\n\n## Known Issues\n- Modal can be dismissed by clicking outside — be careful with coordinate clicks\n- 'Additional Questions' step may have required fields — fill all before clicking Next\n- Phone number field may have a country code dropdown — use form_input for both parts\n- If a 'Follow' checkbox appears, leave it as-is"
+  },
+  {
+    "domain": "indeed.com",
+    "skill": "Indeed Job Application — verified patterns\n\n## Applying\n- Click 'Apply now' on the job listing page (right panel or top of description)\n- Indeed has its own application flow — multi-step form\n- Resume may be pre-attached from Indeed profile — check and skip if already there\n- Contact info is usually pre-filled — verify and click Continue\n- Additional questions vary by employer — fill all required fields\n- Final step has 'Submit your application' button\n\n## Navigation\n- Search: 'What' (job title/keywords) and 'Where' (location) fields at top\n- Filter: date posted, salary estimate, job type, experience level on left sidebar\n- Click job title to view description; apply button is typically on right panel\n- Some jobs redirect to external company sites\n\n## Edge Cases\n- 'Apply on company site' opens the employer's ATS in a new tab\n- Indeed may ask screening questions before showing the full application\n- Assessments may be required — these are timed tests, escalate if encountered"
+  },
+  {
+    "domain": "myworkdayjobs.com",
+    "skill": "Workday ATS — verified patterns\n\n## Application Flow\n- Click 'Apply' button on the job page to start\n- Workday uses a multi-step wizard: My Information → My Experience → Application Questions → Voluntary Disclosures → Self-Identify → Review → Submit\n- 'Autofill with Resume' or 'Apply with LinkedIn' buttons may appear at the top — use them if available to pre-fill fields\n- Each section has a 'Save and Continue' or 'Next' button at the bottom\n\n## Form Patterns (CRITICAL)\n- Workday uses custom React/web components — ALWAYS use form_input for all dropdowns and selects\n- Search dropdowns (country, state, school): type text into the search field, wait for results to appear, then select\n- Date fields: click the field, a calendar or date picker appears — type the date directly in MM/DD/YYYY format\n- For 'How Did You Hear About Us': use form_input with the source text\n- Required fields marked with asterisk (*) — fill ALL before proceeding\n- Radio buttons: use computer left_click with the element ref\n\n## CC-305 Disability Form\n- This is a US federal form — appears in Voluntary Self-Identification section\n- Has Name field, Date field (signature date), and disability status radio buttons\n- For the date: open the calendar picker and click today's date (highlighted), OR type today's date\n- Select the appropriate disability option radio button\n\n## EEO / Diversity Section\n- Gender, Race/Ethnicity, Veteran Status dropdowns\n- These are OPTIONAL in many implementations but may be required\n- Use form_input for each dropdown\n\n## Known Edge Cases\n- Workday pages load slowly — wait 3-5 seconds after navigation before reading\n- 'Sign In' may be required — check if already signed in via SSO\n- Some Workday instances use *.myworkdayjobs.com, others use *.wd1.myworkdayjobs.com or *.wd5.myworkdayjobs.com\n- File upload for resume: use file_upload tool, never click the upload button\n- 'Already Applied' message may appear — if so, the job was already applied to, stop and report"
+  },
+  {
+    "domain": "wd1.myworkdayjobs.com",
+    "skill": "Workday ATS (wd1 subdomain) — same patterns as myworkdayjobs.com. See that domain's skill for full details."
+  },
+  {
+    "domain": "wd5.myworkdayjobs.com",
+    "skill": "Workday ATS (wd5 subdomain) — same patterns as myworkdayjobs.com. See that domain's skill for full details."
+  },
+  {
+    "domain": "myworkday.com",
+    "skill": "Workday ATS (myworkday.com) — same patterns as myworkdayjobs.com. See that domain's skill for full details."
+  },
+  {
+    "domain": "greenhouse.io",
+    "skill": "Greenhouse ATS — verified patterns\n\n## Application Flow\n- Job page has an 'Apply for this job' button — click it\n- Single long form (not multi-step): all fields on one page\n- Sections: Personal Information, Resume/Cover Letter, Custom Questions, EEO (optional)\n- 'Submit Application' button at the bottom\n\n## Form Patterns\n- Standard HTML form inputs — form_input works well for all fields\n- Resume upload: file input element — use file_upload tool\n- Cover letter: may be a textarea or file upload\n- Custom questions vary by company — fill all required fields\n- LinkedIn/GitHub/Portfolio URL fields are common\n- Dropdowns are usually native <select> elements — form_input handles them\n\n## Known Edge Cases\n- Some companies embed Greenhouse in an iframe on their own domain\n- The form may be long — scroll down to find all sections\n- 'Are you legally authorized to work in the United States?' is common\n- 'Will you now or in the future require sponsorship?' is common"
+  },
+  {
+    "domain": "boards.greenhouse.io",
+    "skill": "Greenhouse ATS (boards subdomain) — same patterns as greenhouse.io."
+  },
+  {
+    "domain": "lever.co",
+    "skill": "Lever ATS — verified patterns\n\n## Application Flow\n- Job page shows description with 'Apply for this job' button at top or bottom\n- Single-page form: Personal Info, Resume, Cover Letter, Custom Questions\n- 'Submit application' button at the bottom\n\n## Form Patterns\n- Clean, simple forms — standard inputs work well\n- Resume: file upload field — use file_upload tool\n- Phone field may expect specific format — use international format with country code\n- Custom questions are company-specific\n- Some fields use placeholder text as labels\n\n## Known Edge Cases\n- Lever forms are typically embedded at jobs.lever.co/{company}/{job-id}/apply\n- The apply page may auto-scroll to the form\n- Some companies require LinkedIn profile URL"
+  },
+  {
+    "domain": "jobs.lever.co",
+    "skill": "Lever ATS (jobs subdomain) — same patterns as lever.co."
+  },
+  {
+    "domain": "ashbyhq.com",
+    "skill": "Ashby ATS — verified patterns\n\n## Application Flow\n- Job page with 'Apply' button\n- Multi-section form: Personal Info, Resume, Custom Questions\n- 'Submit Application' at the bottom\n\n## Form Patterns\n- Modern React-based forms\n- Dropdowns may be custom components — use form_input\n- File upload for resume — use file_upload tool\n- Location fields may be autocomplete — type and wait for suggestions, then select"
+  },
+  {
+    "domain": "icims.com",
+    "skill": "iCIMS ATS — verified patterns\n\n## Application Flow\n- 'Apply Now' or 'Apply Online' button on job page\n- May require creating an account or signing in first\n- Multi-step form with sections for personal info, work history, education, questions\n\n## Form Patterns\n- Often uses iframes — check for iframe content\n- Forms may have save/continue buttons between sections\n- Date fields typically use MM/DD/YYYY format\n- Resume upload or paste options available\n\n## Known Edge Cases\n- iCIMS login pages can appear before the application\n- Session timeouts are common on longer forms — work quickly\n- Some iCIMS implementations look very different from others"
+  },
+  {
+    "domain": "smartrecruiters.com",
+    "skill": "SmartRecruiters ATS — verified patterns\n\n## Application Flow\n- 'Apply' button on job listing\n- May offer 'Apply with LinkedIn' option\n- Multi-step form: Personal Info, Experience, Questions, Review\n\n## Form Patterns\n- Modern UI with clear navigation between steps\n- Dropdowns are custom components — use form_input\n- Resume upload available — use file_upload tool\n- Phone number has separate country code dropdown"
+  },
+  {
+    "domain": "calendar.google.com",
+    "skill": "Google Calendar best practices:\n- Click on a time slot to create a new event\n- Drag events to reschedule them\n- Click on an event to view details, edit, or delete\n- Use the mini calendar on the left to navigate to different dates\n- Keyboard: 'c' to create event, 't' to go to today, arrow keys to navigate"
+  },
+  {
+    "domain": "drive.google.com",
+    "skill": "Google Drive best practices:\n- Double-click files to open them, single-click to select\n- Right-click for context menu (download, share, rename, etc.)\n- Use the search bar to find files by name or content\n- Create new items with the '+ New' button on the left\n- Drag and drop to move files between folders"
+  },
+  {
+    "domain": "notion.so",
+    "skill": "Notion best practices:\n- Click to place cursor, type '/' to open command menu\n- Drag blocks using the ⋮⋮ handle on the left\n- Use sidebar for navigation between pages\n- Toggle blocks expand/collapse on click\n- Databases can be viewed as table, board, calendar, etc."
+  },
+  {
+    "domain": "figma.com",
+    "skill": "Figma best practices:\n- This is a canvas-based design tool - always use screenshots to see content\n- Use 'V' for select tool, 'R' for rectangle, 'T' for text\n- Zoom with Cmd/Ctrl+scroll or Cmd/Ctrl++ and Cmd/Ctrl+-\n- Navigate frames in the left sidebar\n- Right-click for context menus and additional options"
+  },
+  {
+    "domain": "slack.com",
+    "skill": "Slack best practices:\n- Channels listed in left sidebar - click to switch\n- Cmd/Ctrl+K to quickly switch channels/DMs\n- @ mentions notify users, # references channels\n- Thread replies keep conversations organized\n- Use the search bar to find messages, files, and people"
+  },
+  {
+    "domain": "twitter.com",
+    "antiBot": true,
+    "skill": "See x.com — twitter.com redirects to x.com."
+  },
+  {
+    "domain": "x.com",
+    "antiBot": true,
+    "skill": "X/Twitter — verified patterns (updated 2026-03-30)\n\n## Reading pages (CRITICAL)\n- X loads content asynchronously — page looks empty for 3-5 seconds after navigation.\n- read_page often returns ONLY \"To view keyboard shortcuts\" — tweets haven't loaded yet.\n- DO NOT re-navigate to the same URL. That resets loading and makes it worse.\n- Instead: wait 5 seconds, then use get_page_text — it reads visible text and is more reliable.\n- If get_page_text returns nothing, scroll down once and try again.\n\n## Search\n- URL: x.com/search?q={encoded_query}&src=typed_query&f=live\n- After navigating, wait 5 seconds, then get_page_text (NOT read_page).\n- Scroll down once to load more tweets, then get_page_text again.\n- Tweet URLs in page text follow pattern: /status/{id}\n\n## Text input (CRITICAL — Draft.js)\n- form_input DOES NOT WORK — Draft.js ignores programmatic input.\n- computer type action GARBLES TEXT.\n- ONLY RELIABLE METHOD — use javascript_tool:\n  document.querySelector('[data-testid=\"tweetTextarea_0\"]').focus();\n  document.execCommand('insertText', false, 'your reply text here');\n- Always verify text appeared by reading after insertion.\n\n## Replying to a tweet\n1. Navigate to tweet URL (x.com/{handle}/status/{id})\n2. Wait 3 seconds, read the page\n3. Click the reply/comment icon (speech bubble) in the action bar\n4. Use javascript_tool to insert text (see above)\n5. Verify text appeared, then click blue \"Reply\" button\n6. Wait 2 seconds to confirm reply posted\n\n## Known traps\n- DO NOT scroll looking for \"Post your reply\" — reply box appears after clicking comment icon\n- x.com/compose/post may open — that's fine, type and click Reply there\n- \"Leave site?\" dialog — ALWAYS click Cancel, finish posting first\n- Reply button is disabled until text is entered — verify first\n- Space replies 15+ seconds apart (rate limiting)\n- NEVER navigate to the same URL you're already on"
+  },
+  {
+    "domain": "amazon.com",
+    "skill": "Amazon best practices:\n- Use the search bar at the top for product search\n- Filter results using the left sidebar (price, ratings, Prime, etc.)\n- Click 'Add to Cart' or 'Buy Now' to purchase\n- Product details and reviews are on the product page\n- Check seller information and shipping times before purchasing"
+  }
+]

@@ -1,0 +1,24 @@
+{
+  "name": "@hanzi/browser-agent",
+  "version": "0.1.0",
+  "description": "SDK for the Hanzi browser automation platform. Control a real Chrome browser programmatically.",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hanzili/hanzi-browse.git",
+    "directory": "sdk"
+  },
+  "homepage": "https://browse.hanzilla.co/docs.html#build-with-hanzi",
+  "keywords": ["browser-automation", "ai-agent", "hanzi", "mcp", "chrome"],
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.0"
+  },
+  "license": "PolyForm-Noncommercial-1.0.0"
+}
